@@ -13,8 +13,8 @@ const passport = require('passport')
 const Emitter = require('events')
 
 // Database connection
-const url = 'mongodb://localhost/PizzaStore'
-mongoose.connect('mongodb://localhost/PizzaStore', { useNewUrlParser: true });
+const url = process.env.mongoURI
+mongoose.connect(url, { useNewUrlParser: true });
 const connection = mongoose.connection;
 
 // Event emitter
@@ -28,7 +28,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: { maxAge: 1000 * 60 * 60 * 24 }, // cookie life for 24hrs
     store: MongoStore.create({
-        mongoUrl: 'mongodb://localhost/PizzaStore',
+        mongoUrl: url,
         collection: 'sessions'
     })
 }))
